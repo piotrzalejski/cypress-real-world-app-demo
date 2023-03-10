@@ -1,26 +1,24 @@
-/// <reference types="cypress" />
-
 import { LoginPage } from "../pageObjects/loginPage";
 
 const login = new LoginPage();
 
-let VALIDUSER : string;
-let VALIDPASS : string;
+let validUser : string;
+let validPass : string;
 
-let INVALIDUSER : string;
-let INVALIDPASS : string;
+let invalidUser: string;
+let invalidPass : string;
 
 
-describe('template spec', () => {
+describe('Login Tests', () => {
   beforeEach(() =>{
     login.visit();
     
     cy.fixture('user-data').then((data) =>{
-      VALIDUSER = data.validUser.username;
-      VALIDPASS = data.validUser.password;
+      validUser = data.validUser.username;
+      validPass = data.validUser.password;
     
-      INVALIDUSER = data.invalidUser.username;
-      INVALIDPASS = data.invalidUser.password;
+      invalidUser = data.invalidUser.username;
+      invalidPass = data.invalidUser.password;
     })
   })
 
@@ -32,16 +30,16 @@ describe('template spec', () => {
   })
 
   it('Displays error on invalid login attempt', () =>{
-    login.fillUsername(INVALIDUSER);
-    login.fillPassword(INVALIDPASS);
+    login.fillUsername(invalidUser);
+    login.fillPassword(invalidPass);
 
     login.clickSignInBtn();
-    login.verifyLoginError();
+    login.verifyLoginError('Username or password is invalid');
   })
   
   it('Displays home page after succesful login', () =>{
-    login.fillUsername(VALIDUSER);
-    login.fillPassword(VALIDPASS);
+    login.fillUsername(validUser);
+    login.fillPassword(validPass);
     login.clickSignInBtn();
     login.verifyLoginSuccess("My Account");
   })

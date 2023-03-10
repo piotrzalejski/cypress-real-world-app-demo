@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 export class LoginPage{
 
     public visit(){
@@ -35,10 +33,10 @@ export class LoginPage{
     }
 
     public verifyLoginSuccess(menuItem : string){
-        cy.contains(menuItem);
+        cy.get('[data-test="sidenav"]').should('contain.text',menuItem);
     }
 
-    public verifyLoginError(){
-        cy.get('[data-test="signin-error"]').contains('Username or password is invalid');
+    public verifyLoginError(error: string){
+        cy.get('[data-test="signin-error"]').should('contain.text',error);
     }
 }
